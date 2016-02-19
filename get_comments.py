@@ -142,7 +142,7 @@ AND src.ods_sentence_id = T.ods_sentence_id"""
         print "Get comment Error"
 
 db = MySQLdb.connect("223.252.211.186", "us_opinionmining", "wWCa5KqKhJnpbQSv", "us_opinion_mining", charset = "utf8")
-results = list(get_comments_three_differences(db))
+results = get_comments_three_differences(db)
 csvfile = file('E:\\requirement\\get_comments_three_differences.csv','wb')
 writer = csv.writer(csvfile)
 first_line = ('task_id', 'ods_sentence_id', 'content', 'content_src', 'concept_name', 'user_id', 'sentiment', 'is_irrelevent')
@@ -155,6 +155,10 @@ for item in results:
     four = item[4].encode('gbk')
     string_csv = (item[0], item[1], two, three, four, item[5], item[6], item[7])
     writer.writerow(string_csv)
+last_line = u"注：1，2，3，4分别是好评，中评，差评和矛盾，is_irrelevent = 0，1分别表示和主题无关，和主题有关"
+last_line = last_line.encode('gbk')
+#csvfile.write(last_line)
+writer.writerow(last_line)
 csvfile.close()
 
 results = get_comments_different(db)
@@ -169,5 +173,8 @@ for item in results:
     four = item[4].encode('gbk')
     string_csv = (item[0], item[1], two, three, four, item[5], item[6], item[7])
     writer.writerow(string_csv)
+last_line = u"注：sentiment = 1，2，3，4分别是好评，中评，差评和矛盾，is_irrelevent = 0，1分别表示和主题无关，和主题有关"
+last_line = last_line.encode('gbk')
+csvfile.write(last_line) #直接用csvfile.write而不是writer.writerow()来写最后一行，因为最后一行不需要csv格式，用writer.writerow()写会出错
 csvfile.close()
 db.close()
