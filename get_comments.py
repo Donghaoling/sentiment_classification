@@ -145,7 +145,7 @@ db = MySQLdb.connect("223.252.211.186", "us_opinionmining", "wWCa5KqKhJnpbQSv", 
 results = get_comments_three_differences(db)
 csvfile = file('E:\\requirement\\get_comments_three_differences.csv','wb')
 writer = csv.writer(csvfile)
-first_line = ('task_id', 'ods_sentence_id', 'content', 'content_src', 'concept_name', 'user_id', 'sentiment', 'is_irrelevent')
+first_line = ('task_id', 'ods_sentence_id', 'content', 'content_src', 'concept_name', 'user_id', 'sentiment', 'is_irrelevent', 'sentiment_expected', 'is_irrelevent_expected')
 writer.writerow(first_line)
 #按行写入csv文件
 for item in results:
@@ -155,8 +155,8 @@ for item in results:
     four = item[4].encode('gbk')
     string_csv = (item[0], item[1], two, three, four, item[5], item[6], item[7])
     writer.writerow(string_csv)
-last_line = u"注：1，2，3，4分别是好评，中评，差评和矛盾，is_irrelevent = 0，1分别表示和主题无关，和主题有关"
-last_line = last_line.encode('gbk')
+last_line = u"注：1，2，3，4分别是好评，中评，差评和矛盾，is_irrelevent = 0，1分别表示和主题有关，和主题无关"
+last_line = (last_line.encode('gbk'),)
 #csvfile.write(last_line)
 writer.writerow(last_line)
 csvfile.close()
@@ -164,7 +164,7 @@ csvfile.close()
 results = get_comments_different(db)
 csvfile = file('E:\\requirement\\get_comments_different.csv','wb')
 writer = csv.writer(csvfile)
-first_line = ('task_id', 'ods_sentence_id', 'content', 'content_src', 'concept_name', 'sentiment', 'is_irrelevent', 'user_id')
+first_line = ('task_id', 'ods_sentence_id', 'content', 'content_src', 'concept_name', 'sentiment', 'is_irrelevent', 'user_id', 'sentiment_expected', 'is_irrelevent_expected')
 writer.writerow(first_line)
 for item in results:
     #第3,4,5列是中文字符，要先encode成gbk编码再写入，windows是用gbk编码的，所以不要encode成utf8
