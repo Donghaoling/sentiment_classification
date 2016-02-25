@@ -1,0 +1,5 @@
+1. args的第一个参数args[0]是input file的文件地址, 就是要分析的文本文件
+2. args[1]是output file的文件地址, 以纯文本的形式输出
+3. args[2]是output xml file的文件地址, 输出xml文件格式的文本
+
+如： data_input/input.txt results/input.out.txt input.out.xml 
